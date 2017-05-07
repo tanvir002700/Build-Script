@@ -1,0 +1,37 @@
+#!/bin/bash
+if [[ $1 == *.cpp ]]
+then
+    echo "compiling $1 ................."
+    g++ -O2 -w -std=c++11 -o ${1%.*}.out  $1;
+elif [[ $1 == *.c ]]
+then
+    echo "compiling $1 ................."
+    gcc -O2 -w -o ${1%.*}.out $1; 
+else
+    
+    echo "Please compile only .c or .cpp files"
+    exit 0;
+fi
+
+
+if [ $? -eq 0 ]
+then
+    echo "compile Successfully."
+    echo "Output file => ${1%.*}.out"
+    if [[ $# == 1 ]]
+    then
+        ./${1%.*}.out
+    elif [[ $# == 2 ]]
+    then
+        echo "input file => $2"
+        ./${1%.*}.out < $2
+    elif [[ $# == 3 ]]
+    then
+        echo "input file => $2"
+        echo "output file => $3"
+        ./${1%.*}.out <$2 >$3
+    fi
+else
+    echo "Compilation Error"
+fi
+
