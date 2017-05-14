@@ -1,20 +1,24 @@
 #!/bin/bash
 
 flag=0;
+compile=0;
 if [[ $1 == *.cpp ]]
 then
     echo "compiling $1 ................."
     g++ -O2 -w -std=c++11 -o ${1%.*}.out  $1;
+    compile=$?
     flag=1;
 elif [[ $1 == *.c ]]
 then
     echo "compiling $1 ................."
     gcc -O2 -w -o ${1%.*}.out $1;
+    compile=$?
     flag=1;
 elif [[ $1 == *.java ]]
 then
     echo "compiling $1.................."
     javac $1
+    compile=$?
     flag=2;     
 else
     
@@ -23,7 +27,7 @@ else
 fi
 
 
-if [ $? -eq 0 ]
+if [ $compile -eq 0 ]
 then
     echo "compile Successfully."
     echo "Output file => ${1%.*}.out"
